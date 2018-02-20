@@ -13,12 +13,15 @@ public class LoginToLinkedIn {
     public void successfulLoginTest() throws InterruptedException {
         WebDriver driver = new FirefoxDriver();
         driver.get("https://www.linkedin.com/");
+        String initialPageTitle = "LinkedIn: Log In or Sign Up";
+        Assert.assertEquals(driver.getTitle(), initialPageTitle,
+                "Login page title is wrong");
 
         WebElement emailField = driver.findElement(By.id("login-email"));
         //WebElement emailField = driver.findElement(By.xpath("//*[@id='login-email']"));
         WebElement passwordField = driver.findElement(By.id("login-password"));
         WebElement signInButton = driver.findElement(By.id("login-submit"));
-        String expectedUrl = "https://www.linkedin.com/feed/";
+        String initiaiPageUrl = driver.getCurrentUrl();
 
         emailField.sendKeys("testmedia@ukr.net");
         passwordField.sendKeys("qwertyQ1");
@@ -26,9 +29,16 @@ public class LoginToLinkedIn {
         sleep(5000);
 
         WebElement settingsControl = driver.findElement(By.xpath("//*[@id='nav-settings__dropdown-trigger']"));
-        
-        Assert.assertEquals(driver.getCurrentUrl(), expectedUrl);
-        Assert.assertTrue(settingsControl.isDisplayed(), "Settings drop down is not displayed");
+
+        //Assert.assertEquals(driver.getCurrentUrl(), initiaiPageUrl);
+        Assert.assertNotEquals(driver.getTitle(), initialPageTitle,
+                "Page title has NOT been changed after Login");
+        //Assert.assertFalse(driver.getTitle().equals(initialPageTitle), "Page title has NOT been changed after Login");
+        Assert.assertTrue(settingsControl.isDisplayed(),
+                "Settings drop down is not displayed");
+        Assert.assertNotEquals(driver.getCurrentUrl(), initiaiPageUrl,
+                "Page URL has NOT been changed after Login");
+
         driver.close();
     }
 
@@ -46,7 +56,8 @@ public class LoginToLinkedIn {
         signInButton.click();
 
         WebElement alertMessage = driver.findElement(By.xpath("//div[@id='global-alert-queue']//strong[not(text()='')]"));
-        Assert.assertTrue(alertMessage.isDisplayed(), "Alert message is not displayed");
+        Assert.assertTrue(alertMessage.isDisplayed(),
+                "Alert message is not displayed");
         driver.close();
     }
 }
