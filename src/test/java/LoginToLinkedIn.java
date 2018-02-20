@@ -1,25 +1,24 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import static java.lang.Thread.sleep;
 
 public class LoginToLinkedIn {
     WebDriver driver;
 
-    @BeforeClass
-    public void beforeClass() {
-        driver = new FirefoxDriver();
+    @BeforeMethod
+    public void beforeTest() {
+        driver = new ChromeDriver();
         driver.get("https://www.linkedin.com/");
     }
 
-    @AfterClass
-    public void afterClass() {
+    @AfterMethod
+    public void afterTest() {
         driver.close();
     }
 
@@ -32,7 +31,7 @@ public class LoginToLinkedIn {
         //WebElement emailField = driver.findElement(By.xpath("//*[@id='login-email']"));
         WebElement passwordField = driver.findElement(By.id("login-password"));
         WebElement signInButton = driver.findElement(By.id("login-submit"));
-        String initiaiPageUrl = driver.getCurrentUrl();
+        String initialPageUrl = driver.getCurrentUrl();
 
         emailField.sendKeys("testmedia@ukr.net");
         passwordField.sendKeys("qwertyQ1");
@@ -41,11 +40,11 @@ public class LoginToLinkedIn {
 
         WebElement settingsControl = driver.findElement(By.xpath("//*[@id='nav-settings__dropdown-trigger']"));
 
-        //Assert.assertEquals(driver.getCurrentUrl(), initiaiPageUrl);
+        //Assert.assertEquals(driver.getCurrentUrl(), initialPageUrl);
         Assert.assertNotEquals(driver.getTitle(), initialPageTitle, "Page title has NOT been changed after Login");
         //Assert.assertFalse(driver.getTitle().equals(initialPageTitle), "Page title has NOT been changed after Login");
         Assert.assertTrue(settingsControl.isDisplayed(), "Settings drop down is not displayed");
-        Assert.assertNotEquals(driver.getCurrentUrl(), initiaiPageUrl, "Page URL has NOT been changed after Login");
+        Assert.assertNotEquals(driver.getCurrentUrl(), initialPageUrl, "Page URL has NOT been changed after Login");
     }
 
     @Test
