@@ -24,9 +24,9 @@ public class LinkedInHomePage extends LinkedInBasePage {
         waitUntilElementIsClickable(settingsControl);
         return settingsControl.isDisplayed();
     }
-    public SearchResultsPage searchFor (String searchTerm){
+    public LinkedInSearchPage searchFor (String searchTerm){
         searchField.sendKeys(searchTerm);
         submiteSearchIcon.click();
-        return new SearchResultsPage(driver);
+        return new LinkedInSearchPage(driver);
     }
 }

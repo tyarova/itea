@@ -8,7 +8,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page.LinkedInHomePage;
 import page.LinkedInLandingPage;
-import page.SearchResultsPage;
+import page.LinkedInSearchPage;
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class LinkedInSearchTest {
@@ -19,7 +21,6 @@ public class LinkedInSearchTest {
     @BeforeMethod
     public void beforeTest() {
         driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://www.linkedin.com/");
         searchRequest = "hr";
         landingPage = new LinkedInLandingPage(driver);
@@ -35,7 +36,7 @@ public class LinkedInSearchTest {
         LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertyQ1");
         Assert.assertTrue(homePage.isSignedIn(),
                 "User is not signed in");
-        SearchResultsPage searchResultsPage = homePage.searchFor(searchRequest);
+        LinkedInSearchPage searchResultsPage = homePage.searchFor(searchRequest);
         Assert.assertTrue(searchResultsPage.resultsAreShown(),
                 "Search Result Block is not shown");
         searchResultsPage.scrollSearchResults();
@@ -44,6 +45,20 @@ public class LinkedInSearchTest {
         Assert.assertTrue(searchResultsPage.searchResultsContainSearchTerm(searchRequest),
                 "Some of the results do not contain search request");
     }
+    @Test
+    public void basicSearchTestTeacherVersion() throws InterruptedException {
+        LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertyQ1");
+        LinkedInSearchPage searchResultsPage = homePage.searchFor(searchRequest);
+        List<String> results = searchResultsPage.getResults();
+
+        Assert.assertEquals(results.size(), 10,"There are less than 10 results have been found");
+
+        for (String result: results){
+            Assert.assertTrue(result.toLowerCase().contains(searchRequest),
+                    "Searchterm "+searchRequest+ "not found in title");
+        }
+    }
+
 }
 
 
