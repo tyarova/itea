@@ -12,8 +12,6 @@ public class LinkedInNavigationMenuPage extends LinkedInBasePage {
     @FindBy(xpath = "//*[@type='search-icon']")
     private WebElement submiteSearchIcon;
 
-    String searchTerm;
-
     public LinkedInNavigationMenuPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);

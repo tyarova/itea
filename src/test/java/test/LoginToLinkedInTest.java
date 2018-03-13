@@ -32,7 +32,6 @@ public class LoginToLinkedInTest {
     public void successfulLoginTest() throws InterruptedException {
         Assert.assertEquals(driver.getTitle(),
                 "LinkedIn: Log In or Sign Up", "Login page title is wrong");
-
         LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertyQ1");
         Assert.assertTrue(homePage.isSignedIn(),
                 "User is not signed in");
@@ -42,17 +41,17 @@ public class LoginToLinkedInTest {
                 "Page URL has NOT been changed after Login");
     }
 
-//    @Test
-//    public void negativeLoginTest() throws InterruptedException {
-//        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up",
-//                "Login page title is wrong");
-//        LinkedInLoginPage loginPage = landingPage.loginAs("testmedia@ukr.net", "qwertyQ1");
-//        Assert.assertTrue(loginPage.isFailedLogIn(),
-//                "User has signed in");
-//        Assert.assertNotEquals(loginPage.getPageTitle(), initialPageTitle,
-//                "Page title has NOT been changed after Login");
-//        Assert.assertNotEquals(loginPage.getPageUrl(), initialPageUrl,
-//                "Page URL has NOT been changed after Login");
-//
-//    }
+    @Test
+    public void negativeLoginTest() throws InterruptedException {
+        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up",
+                "Login page title is wrong");
+        LinkedInLoginPage loginPage = landingPage.loginAs("testmedia", "qwertyQ1");
+        Assert.assertTrue(loginPage.isFailedLogIn(),
+                "User has signed in");
+        Assert.assertNotEquals(loginPage.getPageTitle(), initialPageTitle,
+                "Page title has NOT been changed after Login");
+        Assert.assertNotEquals(loginPage.getPageUrl(), initialPageUrl,
+                "Page URL has NOT been changed after Login");
+
+    }
 }
