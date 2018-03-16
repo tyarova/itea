@@ -15,12 +15,18 @@ public class LinkedInLandingPage extends LinkedInBasePage {
     @FindBy(id = "login-submit")
     private WebElement signInButton;
 
+    @FindBy(xpath = "//form[@class= 'login-form']")
+    private WebElement loginForm;
 
     public LinkedInLandingPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
+    public boolean stayOnLandingPage(){
+        waitUntilElementIsVisible(loginForm, 5);
+        return loginForm.isDisplayed();
+    }
 
     public <T> T loginAs(String email, String password) {
         waitUntilElementIsClickable(emailField, 5);
@@ -36,13 +42,6 @@ public class LinkedInLandingPage extends LinkedInBasePage {
         else {
             return (T) this;
         }
-//        if (getPageUrl().equals("https://www.linkedin.com/uas/login-submit")) {
-//            return (T) PageFactory.initElements(driver, LinkedInLoginPage.class);
-//        } else if (getPageTitle().equals("LinkedIn: Log In or Sign Up")) {
-//            return (T) PageFactory.initElements(driver, LinkedInLandingPage.class);
-//        } else {
-//            return (T) PageFactory.initElements(driver, LinkedInHomePage.class);
-//        }
     }
 
 }

@@ -1,38 +1,17 @@
 package test;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page.LinkedInHomePage;
-import page.LinkedInLandingPage;
 import page.LinkedInSearchPage;
-
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class LinkedInSearchTest {
-    WebDriver driver;
-    LinkedInLandingPage landingPage;
+public class LinkedInSearchTest extends LinkedInBaseTest {
     String searchRequest;
-
-    @BeforeMethod
-    public void beforeTest() {
-        driver = new FirefoxDriver();
-        driver.get("https://www.linkedin.com/");
-        searchRequest = "hr";
-        landingPage = new LinkedInLandingPage(driver);
-        }
-
-    @AfterMethod
-    public void afterTest() {
-        driver.close();
-    }
 
     @Test
     public void basicSearchTest() throws InterruptedException {
+        searchRequest = "hr";
         LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertyQ1");
         Assert.assertTrue(homePage.isSignedIn(),
                 "User is not signed in");
@@ -47,6 +26,7 @@ public class LinkedInSearchTest {
     }
     @Test
     public void basicSearchTestTeacherVersion(){
+        searchRequest = "hr";
         LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertyQ1");
         LinkedInSearchPage searchResultsPage = homePage.searchFor(searchRequest);
         List<String> results = searchResultsPage.getResults();
@@ -58,7 +38,6 @@ public class LinkedInSearchTest {
                     "Searchterm "+searchRequest+ "not found in title");
         }
     }
-
 }
 
 
