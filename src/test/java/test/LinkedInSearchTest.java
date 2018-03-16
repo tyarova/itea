@@ -46,7 +46,7 @@ public class LinkedInSearchTest {
                 "Some of the results do not contain search request");
     }
     @Test
-    public void basicSearchTestTeacherVersion() throws InterruptedException {
+    public void basicSearchTestTeacherVersion(){
         LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertyQ1");
         LinkedInSearchPage searchResultsPage = homePage.searchFor(searchRequest);
         List<String> results = searchResultsPage.getResults();

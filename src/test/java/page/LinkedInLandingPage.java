@@ -21,6 +21,7 @@ public class LinkedInLandingPage extends LinkedInBasePage {
         PageFactory.initElements(driver, this);
     }
 
+
     public <T> T loginAs(String email, String password) {
         waitUntilElementIsClickable(emailField, 5);
         emailField.sendKeys(email);

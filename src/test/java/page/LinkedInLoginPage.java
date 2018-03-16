@@ -24,7 +24,7 @@ public class LinkedInLoginPage extends LinkedInBasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public boolean isFailedLogIn() throws InterruptedException {
+    public boolean isFailedLogIn() {
         waitUntilElementIsClickable(alertMessage);
         return alertMessage.isDisplayed();
     }
