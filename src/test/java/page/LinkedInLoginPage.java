@@ -19,6 +19,12 @@ public class LinkedInLoginPage extends LinkedInBasePage {
     @FindBy(id = "btn-primary")
     private WebElement signInButton;
 
+    @FindBy(id = "session_key-login-error")
+    private WebElement emailValidationMessage;
+
+    @FindBy(id = "session_password-login-error")
+    private WebElement passwordValidationMessage;
+
     public LinkedInLoginPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -27,5 +33,15 @@ public class LinkedInLoginPage extends LinkedInBasePage {
     public boolean isFailedLogIn() {
         waitUntilElementIsClickable(alertMessage);
         return alertMessage.isDisplayed();
+    }
+
+    public String getEmailMessage() {
+        //waitUntilElementIsClickable(emailValidationMessage, 5);
+        return emailValidationMessage.getText();
+    }
+
+    public String getPasswordMessage() {
+        //waitUntilElementIsClickable(passwordValidationMessage, 5);
+        return passwordValidationMessage.getText();
     }
 }

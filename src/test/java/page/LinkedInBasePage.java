@@ -7,9 +7,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class LinkedInBasePage {
     WebDriver driver;
 
+
     public LinkedInBasePage(WebDriver driver) {
         this.driver = driver;
-    }
+       }
 
     public String getPageTitle() {
         return driver.getTitle();

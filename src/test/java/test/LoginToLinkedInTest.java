@@ -1,23 +1,28 @@
 package test;
 
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import page.LinkedInHomePage;
 import page.LinkedInLoginPage;
 
-import java.awt.image.SampleModel;
-
 public class LoginToLinkedInTest extends LinkedInBaseTest {
-String correctEmail = "testmedia@ukr.net";
-String correctPAssword = "qwertyQ1";
 
-    @Test
+    @DataProvider
+    public Object[][] successfulLoginCredentials(){
+        return new Object[][]{
+                {"testmedia@ukr.net", "qwertyQ1"},
+                {"TESTMEDIA@UKR.NET", "qwertyQ1"},
+                {"testmedia@ukr.net ", "qwertyQ1"},
+                {"TestMedia@ukr.net", "qwertyQ1"},
+        };
+    }
+
+    @Test (dataProvider ="successfulLoginCredentials" )
     public void successfulLoginTest(String email, String password) {
-        String initialPageTitle = landingPage.getPageTitle();
-        String initialPageUrl = landingPage.getPageUrl();
         Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
                 "Login page title is wrong");
-        LinkedInHomePage homePage = landingPage.loginAs(correctEmail, correctPAssword);
+        LinkedInHomePage homePage = landingPage.loginAs(email, password);
         Assert.assertTrue(homePage.isSignedIn(),
                 "User is not signed in");
         Assert.assertNotEquals(homePage.getPageTitle(), initialPageTitle,
@@ -29,16 +34,16 @@ String correctPAssword = "qwertyQ1";
     @DataProvider
     public Object[][] negativeLoginCredentials(){
         return new Object[][]{
-                {"testmedia", "qwertyQ1", "Укажите действительный адрес эл. почты.", "Пароль должен содержать не менее 6 символов."},
-                {"testmedia@ukr.net", "password"},
-                {"testmedia", "password"},
-        };
+                {"testmedia", "qwertyQ1", "Please enter a valid email address.", ""},
+                {"testmedia@ukr.net", "password", "", "Hmm, that's not the right password. Please try again or request a new one."},
+                {"testmedia", "password", "Please enter a valid email address.", ""},
+                {"testmed@ukr.net", "qwertyQ1", "Hmm, we don't recognize that email. Please try again.", ""},
+                {"testmedia@ukr.net", "pas", "", "The password you provided must have at least 6 characters."},
+                };
     }
 
     @Test(dataProvider ="negativeLoginCredentials" )
     public void negativeLoginTest(String email, String password, String emailMessage, String passwordMessage) {
-        String initialPageTitle = landingPage.getPageTitle();
-        String initialPageUrl = landingPage.getPageUrl();
         Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
                 "Login page title is wrong");
         LinkedInLoginPage loginPage = landingPage.loginAs(email, password);
@@ -50,7 +55,7 @@ String correctPAssword = "qwertyQ1";
                 "Page URL has NOT been changed after Login");
 
         String actualEmailMessage = loginPage.getEmailMessage();
-        String actualPasswordMessage = loginPage.getPaswordMessage();
+        String actualPasswordMessage = loginPage.getPasswordMessage();
         Assert.assertEquals(emailMessage, actualEmailMessage, "Actual and Expected Email messages do not match");
         Assert.assertEquals(passwordMessage, actualPasswordMessage, "Actual and Expected Password messages do not match");
     }
@@ -65,8 +70,6 @@ String correctPAssword = "qwertyQ1";
     }
     @Test(dataProvider ="loginCredentialsEmpty" )
     public void negativeLoginTestWithEmptyFields(String email, String password) {
-        String initialPageTitle = landingPage.getPageTitle();
-        String initialPageUrl = landingPage.getPageUrl();
         Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
                 "Login page title is different");
         landingPage.loginAs(email, password);
