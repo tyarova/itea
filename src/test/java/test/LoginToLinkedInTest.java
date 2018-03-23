@@ -32,7 +32,7 @@ public class LoginToLinkedInTest extends LinkedInBaseTest {
     }
 
     @DataProvider
-    public Object[][] negativeLoginCredentials(){
+    public Object[][] negativeTestCredentialsIsReturnedToLogin(){
         return new Object[][]{
                 {"testmedia", "qwertyQ1", "Please enter a valid email address.", ""},
                 {"testmedia@ukr.net", "password", "", "Hmm, that's not the right password. Please try again or request a new one."},
@@ -42,7 +42,7 @@ public class LoginToLinkedInTest extends LinkedInBaseTest {
                 };
     }
 
-    @Test(dataProvider ="negativeLoginCredentials" )
+    @Test(dataProvider ="negativeTestCredentialsIsReturnedToLogin" )
     public void negativeLoginTest(String email, String password, String emailMessage, String passwordMessage) {
         Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
                 "Login page title is wrong");
@@ -61,14 +61,14 @@ public class LoginToLinkedInTest extends LinkedInBaseTest {
     }
 
     @DataProvider
-    public Object[][] loginCredentialsEmpty(){
+    public Object[][] negativeTestCredentialsIsReturnedToLanding(){
         return new Object[][]{
                 {"testmedia@ukr.net", ""},
                 {"", "qwertyQ1"},
                 {"", ""},
         };
     }
-    @Test(dataProvider ="loginCredentialsEmpty" )
+    @Test(dataProvider ="negativeTestCredentialsIsReturnedToLanding" )
     public void negativeLoginTestWithEmptyFields(String email, String password) {
         Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up",
                 "Login page title is different");

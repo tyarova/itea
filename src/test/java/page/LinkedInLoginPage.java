@@ -36,12 +36,20 @@ public class LinkedInLoginPage extends LinkedInBasePage {
     }
 
     public String getEmailMessage() {
-        //waitUntilElementIsClickable(emailValidationMessage, 5);
+        try {
+            waitUntilElementIsClickable(emailValidationMessage, 5);
+                    } catch (Exception e){
+            System.out.println("There is no email error message");
+        }
         return emailValidationMessage.getText();
     }
 
     public String getPasswordMessage() {
-        //waitUntilElementIsClickable(passwordValidationMessage, 5);
+        try {
+            waitUntilElementIsClickable(passwordValidationMessage, 5);
+        }catch (Exception e){
+            System.out.println("There is no password error message");
+        }
         return passwordValidationMessage.getText();
     }
 }
