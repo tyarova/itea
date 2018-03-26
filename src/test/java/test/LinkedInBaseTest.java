@@ -45,6 +45,9 @@ public class LinkedInBaseTest {
         driver.close();
     }
 
+    public void openLink(String link) {
+        driver.get(link);
+    }
 
 }
 

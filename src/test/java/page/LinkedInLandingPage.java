@@ -18,6 +18,9 @@ public class LinkedInLandingPage extends LinkedInBasePage {
     @FindBy(xpath = "//form[@class= 'login-form']")
     private WebElement loginForm;
 
+    @FindBy(xpath = "//a[@class='link-forgot-password']")
+    private WebElement forgotPasswordLink;
+
     public LinkedInLandingPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -26,6 +29,11 @@ public class LinkedInLandingPage extends LinkedInBasePage {
     public boolean stayOnLandingPage(){
         waitUntilElementIsVisible(loginForm, 5);
         return loginForm.isDisplayed();
+    }
+
+    public LinkedInRequestPasswordResetPage forgotPasswordLinkClick(){
+        forgotPasswordLink.click();
+        return new LinkedInRequestPasswordResetPage(driver);
     }
 
     public <T> T loginAs(String email, String password) {
