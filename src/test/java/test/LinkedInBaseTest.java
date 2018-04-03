@@ -17,9 +17,14 @@ public class LinkedInBaseTest {
     String initialPageTitle;
     String initialPageUrl;
 
+    /**
+     * Chain of calls to run before each test method
+     * @param browserType - the browser(Firefox, Chrome), used for test run
+     * @param envURL - the environment link, used for test run
+     */
     @Parameters({"browserType", "envURL"})
     @BeforeMethod
-    public void beforeTest(@Optional("firefox") String browserType, @Optional("https://www.linkedin.com/") String envURL) {
+    public void beforeTest(@Optional("chrome") String browserType, @Optional("https://www.linkedin.com/") String envURL) {
 
         switch (browserType.toLowerCase()){
             case "chrome":
@@ -40,13 +45,12 @@ public class LinkedInBaseTest {
         initialPageUrl = landingPage.getPageUrl();
     }
 
+    /**
+     * Chain of calls to run after each test method
+     */
     @AfterMethod
     public void afterTest() {
         driver.close();
-    }
-
-    public void openLink(String link) {
-        driver.get(link);
     }
 
 }

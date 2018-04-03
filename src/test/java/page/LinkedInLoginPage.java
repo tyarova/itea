@@ -1,5 +1,6 @@
 package page;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,16 +26,36 @@ public class LinkedInLoginPage extends LinkedInBasePage {
     @FindBy(id = "session_password-login-error")
     private WebElement passwordValidationMessage;
 
+    /**
+     * {@inheritDoc}
+     * Constructor for class LinkedInLoginPage
+     */
     public LinkedInLoginPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
-    public boolean isFailedLogIn() {
-        waitUntilElementIsClickable(alertMessage);
-        return alertMessage.isDisplayed();
+    /**
+     * {@inheritDoc}
+     * @return {@code true} if alertMessage has been loaded
+     * @throws NoSuchElementException if alertMessage has not been loaded
+     */
+    @Override
+    public boolean isLoaded(){
+        boolean isLoaded = false;
+        try {
+            isLoaded = waitUntilElementIsClickable(alertMessage).isDisplayed();
+
+        }catch (NoSuchElementException e){
+            isLoaded = false;
+        } return isLoaded;
     }
 
+    /**
+     * Get the error message from login form in case of using invalid email
+     * @return text of the error message
+     * @throws Exception if there is no error message
+     */
     public String getEmailMessage() {
         try {
             waitUntilElementIsClickable(emailValidationMessage, 5);
@@ -44,6 +65,11 @@ public class LinkedInLoginPage extends LinkedInBasePage {
         return emailValidationMessage.getText();
     }
 
+    /**
+     * Get the error message from login form in case of using invalid password
+     * @return text of the error message
+     * @throws Exception if there is no error message
+     */
     public String getPasswordMessage() {
         try {
             waitUntilElementIsClickable(passwordValidationMessage, 5);

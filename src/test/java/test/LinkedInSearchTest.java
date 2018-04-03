@@ -9,25 +9,31 @@ import java.util.List;
 public class LinkedInSearchTest extends LinkedInBaseTest {
     String searchRequest;
 
+    /**
+     * Test that verifies basic Search by specific Search term
+     */
     @Test
-    public void basicSearchTest() throws InterruptedException {
+    public void basicSearchTest(){
         searchRequest = "hr";
-        LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertyQ1");
-        Assert.assertTrue(homePage.isSignedIn(),
+        LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "passworD1");
+        Assert.assertTrue(homePage.isLoaded(),
                 "User is not signed in");
         LinkedInSearchPage searchResultsPage = homePage.searchFor(searchRequest);
-        Assert.assertTrue(searchResultsPage.resultsAreShown(),
-                "Search Result Block is not shown");
+        Assert.assertTrue(searchResultsPage.isLoaded(), "Search Result Block is not shown");
         searchResultsPage.scrollSearchResults();
         Assert.assertEquals(searchResultsPage.countSearchResults(), 10,
                 "There are less than 10 results have been found");
         Assert.assertTrue(searchResultsPage.searchResultsContainSearchTerm(searchRequest),
                 "Some of the results do not contain search request");
     }
+
+    /**
+     * Test that verifies basic Search by specific Search term
+     */
     @Test
     public void basicSearchTestTeacherVersion(){
         searchRequest = "hr";
-        LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertyQ1");
+        LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertYQ1y");
         LinkedInSearchPage searchResultsPage = homePage.searchFor(searchRequest);
         List<String> results = searchResultsPage.getResults();
 

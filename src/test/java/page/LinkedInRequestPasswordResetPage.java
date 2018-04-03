@@ -14,30 +14,42 @@ public class LinkedInRequestPasswordResetPage extends LinkedInBasePage {
     @FindBy(id = "login-email")
     private WebElement emailField;
 
-    @FindBy(id = "userName-requestPasswordReset")
-    private WebElement requestPasswordResetForm;
-
     @FindBy(xpath = "//input[@name= 'userName']")
     private WebElement userNameField;
 
-    @FindBy(xpath = "//input[@name= 'request']")
+    @FindBy(xpath = "//button[@type= 'submit']")
     private WebElement submitBtton;
 
-
+    /**
+     * {@inheritDoc}
+     * Constructor for class LinkedInRequestPasswordResetPage
+     */
     public LinkedInRequestPasswordResetPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
-    public boolean IsLoaded(){
+
+    /**
+     * {@inheritDoc}
+     * @return {@code true} if userNameField has been loaded
+     * @throws NoSuchElementException if userNameField has not been loaded
+     */
+    @Override
+    public boolean isLoaded(){
         boolean isLoaded = false;
         try {
-            isLoaded = requestPasswordResetForm.isDisplayed();
+            isLoaded = userNameField.isDisplayed();
 
         }catch (NoSuchElementException e){
             isLoaded = false;
         } return isLoaded;
     }
 
+    /**
+     * Submit the email to which reset password link is going to be sent
+     * @param userEmail - the email address to which reset password link is going to be sent
+     * @return new page object
+     */
     public LinkedInPasswordResetSubmitPage submitEmail(String userEmail) {
     userNameField.sendKeys(userEmail);
     submitBtton.click();
