@@ -60,8 +60,8 @@ public class LinkedInLandingPage extends LinkedInBasePage {
      * Login to the site using different credentials
      * @param email - email, that has been used for login
      * @param password - password, that has been used for login
-     * @param <T> - type of the used parameters, that returns appropriate page object
-     * @return new page object, depending on type of used parameters
+     * @param <T> - a generic type that is parameterized over types. Returns the page, depending on used credentials
+     * @return new object of the page, that is opened depending on used credentials
      */
     public <T> T loginAs(String email, String password) {
         waitUntilElementIsClickable(emailField, 5);

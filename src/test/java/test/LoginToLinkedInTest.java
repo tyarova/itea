@@ -11,10 +11,10 @@ public class LoginToLinkedInTest extends LinkedInBaseTest {
     @DataProvider
     public Object[][] successfulLoginCredentials(){
         return new Object[][]{
-                {"testmedia@ukr.net", "qwertYQ1y"},
-                //{"TESTMEDIA@UKR.NET", "qwertYQ1y"},
-                //{"testmedia@ukr.net ", "qwertYQ1y"},
-                //{"TestMedia@ukr.net", "qwertYQ1y"},
+                {"testmedia@ukr.net", "passworD1"},
+                {"TESTMEDIA@UKR.NET", "passworD1"},
+                {"testmedia@ukr.net ", "passworD1"},
+                {"TestMedia@ukr.net", "passworD1"},
         };
     }
 

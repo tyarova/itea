@@ -33,7 +33,7 @@ public class LinkedInSearchTest extends LinkedInBaseTest {
     @Test
     public void basicSearchTestTeacherVersion(){
         searchRequest = "hr";
-        LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "qwertYQ1y");
+        LinkedInHomePage homePage = landingPage.loginAs("testmedia@ukr.net", "passworD1");
         LinkedInSearchPage searchResultsPage = homePage.searchFor(searchRequest);
         List<String> results = searchResultsPage.getResults();
 
@@ -41,7 +41,7 @@ public class LinkedInSearchTest extends LinkedInBaseTest {
 
         for (String result: results){
             Assert.assertTrue(result.toLowerCase().contains(searchRequest),
-                    "Searchterm "+searchRequest+ "not found in title");
+                    "Search Term "+searchRequest+ "not found in title");
         }
     }
 }
